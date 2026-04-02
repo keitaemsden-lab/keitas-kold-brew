@@ -34,9 +34,9 @@ export default function Home() {
       <header className="flex items-center justify-between px-6 pt-8 pb-4">
         <div>
           <img
-            src="/icons/logo-svg.svg"
+            src="/icons/logo.png"
             alt="Keita's Kold Brew"
-            className="h-16 w-auto"
+            className="h-14 w-auto"
           />
           <p className="text-brew-muted text-xs font-body italic mt-0.5">
             Brewed to perfection. Every time.
