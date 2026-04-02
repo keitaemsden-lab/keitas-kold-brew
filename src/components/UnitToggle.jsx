@@ -28,7 +28,7 @@ export default function UnitToggle({ unit, onChange }) {
             aria-pressed={isActive}
             className={`
               px-4 py-2 rounded-full text-sm font-medium font-body
-              transition-all duration-200 min-h-[44px]
+              transition-all duration-200 min-h-[48px]
               flex flex-col items-center leading-tight
               ${isActive
                 ? 'bg-brew-accent text-brew-bg shadow-sm'

@@ -24,7 +24,7 @@ export default function TipCard({ tips, collapsible = false, title = 'Tips' }) {
   };
 
   return (
-    <div className="bg-brew-mid border-l-2 border-brew-accent rounded-card overflow-hidden">
+    <div className="bg-brew-mid border-l-4 border-brew-accent rounded-card overflow-hidden">
       {/* Header */}
       <button
         type="button"

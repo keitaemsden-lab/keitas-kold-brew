@@ -61,7 +61,7 @@ export default function SliderInput({ label, value, onChange, min, max, step, un
           <button
             type="button"
             onClick={() => handleStep(-1)}
-            className="w-11 h-11 flex items-center justify-center bg-brew-mid rounded-input text-brew-text text-lg hover:bg-brew-border transition-colors"
+            className="w-12 h-12 flex items-center justify-center bg-brew-mid rounded-input text-brew-text text-lg hover:bg-brew-border transition-colors"
             aria-label={`Decrease ${label}`}
           >
             {/* Unicode minus sign — visually heavier than a hyphen */}
@@ -87,7 +87,7 @@ export default function SliderInput({ label, value, onChange, min, max, step, un
           <button
             type="button"
             onClick={() => handleStep(1)}
-            className="w-11 h-11 flex items-center justify-center bg-brew-mid rounded-input text-brew-text text-lg hover:bg-brew-border transition-colors"
+            className="w-12 h-12 flex items-center justify-center bg-brew-mid rounded-input text-brew-text text-lg hover:bg-brew-border transition-colors"
             aria-label={`Increase ${label}`}
           >
             +
