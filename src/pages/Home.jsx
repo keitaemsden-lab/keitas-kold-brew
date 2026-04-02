@@ -34,7 +34,7 @@ export default function Home() {
       <header className="flex items-center justify-between px-6 pt-8 pb-4">
         <div>
           <img
-            src="/icons/logo-512.png"
+            src="/icons/logo-svg.svg"
             alt="Keita's Kold Brew"
             className="h-16 w-auto"
           />
