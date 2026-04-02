@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brew-bg:      #1A1208;
+  --brew-surface: #2C1F0E;
+  --brew-mid:     #3D2B14;
+  --brew-accent:  #C8956C;
+  --brew-cream:   #E8C99A;
+  --brew-text:    #F5ECD7;
+  --brew-muted:   #A68B6A;
+  --brew-border:  #4A3520;
+  --brew-success: #7DB87A;
+  --brew-error:   #C0614E;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--brew-bg);
+  color: var(--brew-text);
+  font-family: 'Inter', sans-serif;
+  background-image: radial-gradient(ellipse at 20% 50%, rgba(200,149,108,0.04) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 20%, rgba(200,149,108,0.03) 0%, transparent 50%);
+}
+
+#root {
+  height: 100%;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+.value-transition {
+  transition: all 0.2s ease;
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
