@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Coffee, Droplets, Package } from 'lucide-react';
+import { ArrowLeft, Coffee, Droplets, Package, ChevronDown, ChevronUp } from 'lucide-react';
 
 import { calculateConcentrate, DEFAULTS } from '../utils/calculations';
 import { formatVolume, formatWeight, gToOz, ozToG } from '../utils/unitConversions';
@@ -13,8 +13,8 @@ import TipCard from '../components/TipCard';
 import Timer from '../components/Timer';
 
 const TIPS = [
-  'Use a coarse (extra coarse) grind — essential for cold brew',
-  'Steep in the fridge for 12–24 hours; 16–18 hours is the sweet spot',
+  'Use a coarse (extra coarse) grind, essential for cold brew',
+  'Steep in the fridge for 12-24 hours; 16-18 hours is the sweet spot',
   'Use filtered water for the cleanest flavour',
   'After steeping, strain through a fine mesh or coffee filter',
   'Expected yield accounts for ~20% absorption by the coffee grounds',
@@ -24,14 +24,15 @@ export default function ConcentrateCalculator() {
   const [unit, setUnit] = useLocalStorage(STORAGE_KEYS.UNIT, 'metric');
   const [ratio, setRatio] = useLocalStorage(STORAGE_KEYS.CONCENTRATE_RATIO, DEFAULTS.concentrateRatio);
   const [coffeeGrams, setCoffeeGrams] = useState(DEFAULTS.concentrateCoffeeG);
+  const [ratioOpen, setRatioOpen] = useState(false);
 
   const { waterMl, expectedYieldMl } = calculateConcentrate(coffeeGrams, ratio);
 
   // Slider config switches between metric and imperial
   const coffeeSliderValue = unit === 'imperial' ? gToOz(coffeeGrams) : coffeeGrams;
   const coffeeSliderMin   = unit === 'imperial' ? 0.5  : 10;
-  const coffeeSliderMax   = unit === 'imperial' ? 18   : 500;
-  const coffeeSliderStep  = unit === 'imperial' ? 0.5  : 5;
+  const coffeeSliderMax   = unit === 'imperial' ? 124  : 3500;
+  const coffeeSliderStep  = unit === 'imperial' ? 1    : 50;
   const coffeeSliderUnit  = unit === 'imperial' ? ' oz' : ' g';
 
   const handleCoffeeChange = (val) => {
@@ -84,38 +85,53 @@ export default function ConcentrateCalculator() {
       <div className="px-6 space-y-4">
 
         {/* Ratio section */}
-        <div className="bg-brew-surface rounded-card p-4 space-y-3">
-          <div className="flex items-center justify-between">
+        <div className="bg-brew-surface rounded-card overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setRatioOpen(prev => !prev)}
+            className="w-full flex items-center justify-between px-4 py-3 hover:bg-brew-mid transition-colors"
+            aria-expanded={ratioOpen}
+            aria-label={`Coffee ratio ${ratioOpen ? 'collapse' : 'expand'}`}
+          >
             <span className="text-brew-muted text-sm font-body">Coffee : Water Ratio</span>
-            <span className="text-brew-cream font-body font-semibold">1 : {ratio.toFixed(1)}</span>
-          </div>
+            <div className="flex items-center gap-2">
+              <span className="text-brew-cream font-body font-semibold">1 : {ratio.toFixed(1)}</span>
+              {ratioOpen
+                ? <ChevronUp size={16} className="text-brew-muted flex-shrink-0" />
+                : <ChevronDown size={16} className="text-brew-muted flex-shrink-0" />}
+            </div>
+          </button>
 
-          <input
-            type="range"
-            min={3}
-            max={8}
-            step={0.5}
-            value={ratio}
-            onChange={(e) => setRatio(parseFloat(e.target.value))}
-            style={ratioTrackStyle}
-            className="w-full h-2 rounded-full cursor-pointer appearance-none"
-            aria-label="Coffee to water ratio"
-          />
+          {ratioOpen && (
+            <div className="px-4 pb-4 space-y-3">
+              <input
+                type="range"
+                min={3}
+                max={8}
+                step={0.5}
+                value={ratio}
+                onChange={(e) => setRatio(parseFloat(e.target.value))}
+                style={ratioTrackStyle}
+                className="w-full h-2 rounded-full cursor-pointer appearance-none"
+                aria-label="Coffee to water ratio"
+              />
 
-          <div className="flex justify-between text-brew-muted text-xs font-body">
-            <span>1 : 3</span>
-            <span>1 : 8</span>
-          </div>
+              <div className="flex justify-between text-brew-muted text-xs font-body">
+                <span>1 : 3</span>
+                <span>1 : 8</span>
+              </div>
 
-          <div className="flex items-center justify-between pt-1">
-            <button
-              type="button"
-              onClick={() => setRatio(DEFAULTS.concentrateRatio)}
-              className="text-brew-accent text-sm font-body underline underline-offset-2"
-            >
-              Reset to Keita's (1:4)
-            </button>
-          </div>
+              <div className="flex items-center justify-between pt-1">
+                <button
+                  type="button"
+                  onClick={() => setRatio(DEFAULTS.concentrateRatio)}
+                  className="text-brew-accent text-sm font-body underline underline-offset-2"
+                >
+                  Reset to Keita's (1:4)
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Coffee grounds section */}

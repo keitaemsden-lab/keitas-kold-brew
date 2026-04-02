@@ -40,10 +40,10 @@ export function calculateColdFoam(totalMl, ratio) {
 // Default ratios (exported for use in components)
 export const DEFAULTS = {
   concentrateRatio: 4,           // 1:4 coffee:water
-  concentrateCoffeeG: 100,       // 100g default input
+  concentrateCoffeeG: 3000,      // commercial Toddy brewer batch
   dilutionRatio: { concentrate: 4, water: 5, syrup: 1 },
   dilutionConcentrateMl: 2000,   // 2000ml default input
   foamRatio: { cream: 8, syrup: 2, milk: 1 },
-  foamTotalMl: 110,              // 110ml default input
+  foamTotalMl: 2000,             // standard 2L batch
   timerHours: 18,                // default steep time
 };

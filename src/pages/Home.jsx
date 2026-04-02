@@ -33,9 +33,11 @@ export default function Home() {
       {/* Header */}
       <header className="flex items-center justify-between px-6 pt-8 pb-4">
         <div>
-          <h1 className="font-display text-brew-cream text-2xl font-bold tracking-wide">
-            Keita's <span className="italic font-normal">Kold Brew</span>
-          </h1>
+          <img
+            src="/icons/kkb-logo.png"
+            alt="Keita's Kold Brew"
+            className="h-10 w-auto"
+          />
           <p className="text-brew-muted text-xs font-body italic mt-0.5">
             Brewed to perfection. Every time.
           </p>
