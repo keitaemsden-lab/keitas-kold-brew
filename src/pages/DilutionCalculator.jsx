@@ -10,7 +10,6 @@ import UnitToggle from '../components/UnitToggle';
 import SliderInput from '../components/SliderInput';
 import ResultCard from '../components/ResultCard';
 import TipCard from '../components/TipCard';
-import SaveRatioButton from '../components/SaveRatioButton';
 
 const TIPS = [
   "Keita's ratio makes 5L from 2L concentrate — perfect for a big batch",
@@ -97,7 +96,6 @@ export default function DilutionCalculator() {
             >
               Reset to Keita's (4:5:1)
             </button>
-            <SaveRatioButton onSave={() => {}} label="Save ratio" />
           </div>
         </div>
 

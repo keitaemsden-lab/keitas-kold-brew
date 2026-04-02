@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
 import ConcentrateCalculator from './pages/ConcentrateCalculator';
@@ -32,6 +32,7 @@ function AppInner() {
         <Route path="/concentrate" element={<ConcentrateCalculator />} />
         <Route path="/dilution"   element={<DilutionCalculator />} />
         <Route path="/foam"       element={<ColdFoamCalculator />} />
+        <Route path="*"           element={<Navigate to="/" replace />} />
       </Routes>
       <BottomNav />
     </div>

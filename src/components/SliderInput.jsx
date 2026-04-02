@@ -39,8 +39,9 @@ export default function SliderInput({ label, value, onChange, min, max, step, un
   };
 
   const handleStep = (dir) => {
-    const newVal = Math.min(max, Math.max(min, value + dir * step));
-    onChange(newVal);
+    const raw = Math.min(max, Math.max(min, value + dir * step));
+    const snapped = Math.round(raw / step) * step;
+    onChange(parseFloat(snapped.toFixed(10))); // avoid floating point noise
   };
 
   // Inline style for cross-browser filled-track colour since Tailwind cannot target

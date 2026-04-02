@@ -10,7 +10,6 @@ import UnitToggle from '../components/UnitToggle';
 import SliderInput from '../components/SliderInput';
 import ResultCard from '../components/ResultCard';
 import TipCard from '../components/TipCard';
-import SaveRatioButton from '../components/SaveRatioButton';
 import Timer from '../components/Timer';
 
 const TIPS = [
@@ -116,10 +115,6 @@ export default function ConcentrateCalculator() {
             >
               Reset to Keita's (1:4)
             </button>
-            <SaveRatioButton
-              onSave={() => setRatio(ratio)}
-              label="Save ratio"
-            />
           </div>
         </div>
 

@@ -10,7 +10,6 @@ import UnitToggle from '../components/UnitToggle';
 import SliderInput from '../components/SliderInput';
 import ResultCard from '../components/ResultCard';
 import TipCard from '../components/TipCard';
-import SaveRatioButton from '../components/SaveRatioButton';
 
 const TIPS = [
   'Ingredients must be very cold before frothing',
@@ -134,7 +133,7 @@ export default function ColdFoamCalculator() {
             unit=" parts"
           />
 
-          {/* Reset + Save row */}
+          {/* Reset row */}
           <div className="flex items-center justify-between pt-1">
             <button
               type="button"
@@ -143,10 +142,6 @@ export default function ColdFoamCalculator() {
             >
               Reset to Keita's (8:2:1)
             </button>
-            <SaveRatioButton
-              onSave={() => setRatio(ratio)}
-              label="Save foam ratio"
-            />
           </div>
         </div>
 

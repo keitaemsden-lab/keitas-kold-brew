@@ -24,7 +24,7 @@ export function ozToG(oz) { return oz * G_PER_OZ; }
 export function formatVolume(ml, unit) {
   if (unit === 'imperial') {
     const floz = mlToFlOz(ml);
-    if (floz >= 8) {
+    if (floz >= 16) {
       return `${(floz / 8).toFixed(2)} cups`;
     }
     return `${floz.toFixed(1)} fl oz`;
