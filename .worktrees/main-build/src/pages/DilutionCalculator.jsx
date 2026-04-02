@@ -129,14 +129,14 @@ export default function DilutionCalculator() {
           min={unit === 'imperial' ? 3 : 100}
           max={unit === 'imperial' ? 100 : 3000}
           step={unit === 'imperial' ? 1 : 50}
-          unit={unit === 'imperial' ? 'fl oz' : 'ml'}
+          unit={unit === 'imperial' ? ' fl oz' : ' ml'}
         />
 
         {/* Results */}
         <ResultCard rows={rows} />
 
         {/* Tips */}
-        <TipCard tips={TIPS} />
+        <TipCard tips={TIPS} collapsible title="Serving Tips" />
 
       </div>
     </div>
