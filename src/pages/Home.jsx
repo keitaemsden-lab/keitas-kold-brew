@@ -36,7 +36,7 @@ export default function Home() {
           <img
             src="/icons/logo-512.png"
             alt="Keita's Kold Brew"
-            className="h-10 w-auto"
+            className="h-16 w-auto"
           />
           <p className="text-brew-muted text-xs font-body italic mt-0.5">
             Brewed to perfection. Every time.
