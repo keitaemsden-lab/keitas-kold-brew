@@ -25,12 +25,6 @@ export default function Timer({ defaultHours = 18 }) {
   const mm = String(timer.minutes).padStart(2, '0');
   const ss = String(timer.seconds).padStart(2, '0');
 
-  const handleHoursChange = (e) => {
-    const h = Math.min(24, Math.max(12, parseInt(e.target.value) || 18));
-    setStoredHours(h);
-    timer.setHours(h);
-  };
-
   return (
     <div className="bg-brew-surface rounded-card overflow-hidden">
       {/* ── Header ── */}
@@ -57,15 +51,20 @@ export default function Timer({ defaultHours = 18 }) {
           {/* Hours selector */}
           <div className="flex items-center justify-center gap-2 px-4 pt-3 pb-2">
             <span className="text-brew-muted text-sm font-body">Target:</span>
-            <input
-              type="number"
-              min={12}
-              max={24}
+            <select
               value={storedHours}
-              onChange={handleHoursChange}
+              onChange={(e) => {
+                const h = parseInt(e.target.value);
+                setStoredHours(h);
+                timer.setHours(h);
+              }}
               aria-label="Target steep hours"
-              className="w-16 text-center bg-brew-mid text-brew-text rounded-input p-1 border border-brew-border focus:outline-none focus:border-brew-accent text-sm font-body"
-            />
+              className="bg-brew-mid text-brew-text rounded-input px-2 py-1 border border-brew-border focus:outline-none focus:border-brew-accent text-sm font-body"
+            >
+              {Array.from({ length: 13 }, (_, i) => i + 12).map(h => (
+                <option key={h} value={h}>{h}</option>
+              ))}
+            </select>
             <span className="text-brew-muted text-sm font-body">hours</span>
           </div>
 
