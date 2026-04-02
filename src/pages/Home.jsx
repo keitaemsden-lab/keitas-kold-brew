@@ -31,12 +31,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-brew-bg pb-20">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 pt-8 pb-4">
+      <header className="flex items-center justify-between px-6 pt-4 pb-2">
         <div>
           <img
             src="/icons/logo.png"
             alt="Keita's Kold Brew"
-            className="h-24 w-auto"
+            className="h-48 w-auto"
           />
           <p className="text-brew-muted text-xs font-body italic mt-0.5">
             Brewed to perfection. Every time.
