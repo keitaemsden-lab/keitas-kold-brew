@@ -69,6 +69,7 @@ export default function ColdFoamCalculator() {
       icon: <Gauge size={18} />,
       label: 'Total Volume',
       value: formatVolume(totalMl, unit),
+      highlight: true,
     },
   ];
 
