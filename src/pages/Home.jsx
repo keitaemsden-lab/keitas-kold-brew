@@ -31,15 +31,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-brew-bg pb-20">
       {/* Header */}
-      <header className="px-6 pt-4 pb-2">
+      <header className="px-6 pt-1 pb-1">
         <div className="flex justify-center">
           <img
             src="/icons/logo.png"
             alt="Keita's Kold Brew"
-            className="h-56 w-auto"
+            className="w-auto"
+            style={{ height: '28rem' }}
           />
         </div>
-        <div className="flex items-center justify-between mt-1">
+        <div className="flex items-center justify-between mt-0">
           <p className="text-brew-muted text-xs font-body italic">
             Brewed to perfection. Every time.
           </p>
