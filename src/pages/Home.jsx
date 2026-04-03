@@ -31,16 +31,15 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-brew-bg pb-20">
       {/* Header */}
-      <header className="px-6 pt-1 pb-1">
+      <header className="px-6 pt-2 pb-2">
         <div className="flex justify-center">
           <img
             src="/icons/logo.png"
             alt="Keita's Kold Brew"
-            className="w-auto"
-            style={{ height: '28rem' }}
+            className="w-auto max-h-44 sm:max-h-48 md:max-h-52 object-contain block"
           />
         </div>
-        <div className="flex items-center justify-between mt-0">
+        <div className="flex items-center justify-between gap-3 mt-2">
           <p className="text-brew-muted text-xs font-body italic">
             Brewed to perfection. Every time.
           </p>
@@ -49,7 +48,7 @@ export default function Home() {
       </header>
 
       {/* Divider */}
-      <div className="border-t border-brew-border mx-6 mb-6" />
+      <div className="border-t border-brew-border mx-6 mb-4 mt-1" />
 
       {/* Navigation Cards */}
       <div className="space-y-3 px-6">
