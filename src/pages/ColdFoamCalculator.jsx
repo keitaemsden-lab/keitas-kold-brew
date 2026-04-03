@@ -37,13 +37,15 @@ export default function ColdFoamCalculator() {
     setRatio(DEFAULT_RATIO);
   };
 
-  // Preset quick-select pills — imperial values rounded to 1 decimal for comparison
-  const imperialPresets = [16.9, 33.8, 67.6, 169.1];
-  const metricPresets   = [500, 1000, 2000, 5000];
+  // Preset quick-select pills — chosen so ingredients land on round numbers with 8:2:1 ratio
+  // Metric: multiples of 1100ml (11 parts × 100) → 100ml increments per ingredient
+  // Imperial: multiples of 11 fl oz (11 parts × 1) → 1 fl oz increments per ingredient
+  const imperialPresets = [11, 22, 33, 44];
+  const metricPresets   = [1100, 2200, 3300, 4400];
 
   const isPresetActive = (preset) => {
     if (unit === 'imperial') {
-      return Math.round(mlToFlOz(totalMl) * 10) / 10 === preset;
+      return Math.round(mlToFlOz(totalMl)) === preset;
     }
     return Math.round(totalMl) === preset;
   };
