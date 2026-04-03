@@ -34,7 +34,7 @@ export default function Home() {
       <header className="px-6 pt-2 pb-2">
         <div className="flex justify-center">
           <img
-            src="/icons/logofinal.png"
+            src="/icons/new-logo.png"
             alt="Keita's Kold Brew"
             className="w-auto max-h-44 sm:max-h-48 md:max-h-52 object-contain block"
           />
