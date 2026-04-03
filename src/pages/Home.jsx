@@ -31,18 +31,20 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-brew-bg pb-20">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 pt-4 pb-2">
-        <div>
+      <header className="px-6 pt-4 pb-2">
+        <div className="flex justify-center">
           <img
             src="/icons/logo.png"
             alt="Keita's Kold Brew"
-            className="h-48 w-auto"
+            className="h-56 w-auto"
           />
-          <p className="text-brew-muted text-xs font-body italic mt-0.5">
+        </div>
+        <div className="flex items-center justify-between mt-1">
+          <p className="text-brew-muted text-xs font-body italic">
             Brewed to perfection. Every time.
           </p>
+          <UnitToggle unit={unit} onChange={setUnit} compact />
         </div>
-        <UnitToggle unit={unit} onChange={setUnit} />
       </header>
 
       {/* Divider */}

@@ -11,12 +11,12 @@ const OPTIONS = [
  *
  * @param {{ unit: 'metric' | 'imperial', onChange: (unit: string) => void }} props
  */
-export default function UnitToggle({ unit, onChange }) {
+export default function UnitToggle({ unit, onChange, compact = false }) {
   return (
     <div
       role="group"
       aria-label="Unit system"
-      className="inline-flex items-center bg-brew-mid rounded-full p-1 gap-1"
+      className={`inline-flex items-center bg-brew-mid rounded-full gap-0.5 ${compact ? 'p-0.5' : 'p-1 gap-1'}`}
     >
       {OPTIONS.map(({ value, label, sub }) => {
         const isActive = unit === value;
@@ -27,9 +27,11 @@ export default function UnitToggle({ unit, onChange }) {
             onClick={() => onChange(value)}
             aria-pressed={isActive}
             className={`
-              px-4 py-2 rounded-full text-sm font-medium font-body
-              transition-all duration-200 min-h-[48px]
-              flex flex-col items-center leading-tight
+              rounded-full font-medium font-body transition-all duration-200
+              ${compact
+                ? 'px-2 py-1 text-xs flex items-center'
+                : 'px-4 py-2 text-sm min-h-[48px] flex flex-col items-center leading-tight'
+              }
               ${isActive
                 ? 'bg-brew-accent text-brew-bg shadow-sm'
                 : 'bg-transparent text-brew-muted hover:text-brew-text'
@@ -37,9 +39,11 @@ export default function UnitToggle({ unit, onChange }) {
             `}
           >
             <span>{label}</span>
-            <span className={`text-xs font-normal ${isActive ? 'text-brew-bg/70' : 'text-brew-muted/60'}`}>
-              {sub}
-            </span>
+            {!compact && (
+              <span className={`text-xs font-normal ${isActive ? 'text-brew-bg/70' : 'text-brew-muted/60'}`}>
+                {sub}
+              </span>
+            )}
           </button>
         );
       })}
