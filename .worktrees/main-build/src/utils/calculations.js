@@ -44,6 +44,6 @@ export const DEFAULTS = {
   dilutionRatio: { concentrate: 4, water: 5, syrup: 1 },
   dilutionConcentrateMl: 2000,   // 2000ml default input
   foamRatio: { cream: 8, syrup: 2, milk: 1 },
-  foamTotalMl: 2000,             // standard 2L batch
+  foamTotalMl: 2200,             // 1600ml cream + 400ml syrup + 200ml milk
   timerHours: 18,                // default steep time
 };
