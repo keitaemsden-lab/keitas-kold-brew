@@ -1,77 +1,69 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Coffee, Droplets, Wind, ChevronRight } from 'lucide-react';
-import UnitToggle from '../components/UnitToggle';
-import { useLocalStorage, STORAGE_KEYS } from '../hooks/useLocalStorage';
+import { CALC_LIST, formatInput } from '../calc/config';
+import { readAmount, readParts } from '../state/calcStore';
+import { useUnit } from '../state/unit';
+import { layerHeights } from '../components/Vessel';
+import { toBase } from '../calc/config';
 
-const CARDS = [
-  {
-    to: '/concentrate',
-    Icon: Coffee,
-    title: 'Concentrate',
-    desc: 'How much coffee & water do I need?',
-  },
-  {
-    to: '/dilution',
-    Icon: Droplets,
-    title: 'Dilution',
-    desc: 'Mix your concentrate to drinking strength',
-  },
-  {
-    to: '/foam',
-    Icon: Wind,
-    title: 'Cold Foam',
-    desc: 'Silky foam ratios for any batch size',
-  },
-];
+const MINI_H = 100;
+
+/** A small static vessel: the saved batch drawn to the same scale as its calculator. */
+function MiniVessel({ calc, unit, value, parts }) {
+  const jar = calc.jar(value, parts, toBase(calc, unit, calc[unit].max));
+  const { layers } = layerHeights(jar, MINI_H);
+  return (
+    <span className="mini" aria-hidden="true">
+      <span className="mini__fill">
+        {layers.map((l, i) => <i key={i} className={`l-${l.kind}`} style={{ height: `${(l.h / MINI_H) * 100}%` }} />)}
+      </span>
+    </span>
+  );
+}
 
 export default function Home() {
-  const [unit, setUnit] = useLocalStorage(STORAGE_KEYS.UNIT, 'metric');
-
+  const { unit } = useUnit();
+  useEffect(() => { document.title = "Keita's Kold Brew"; }, []);
   return (
-    <div className="min-h-screen bg-brew-bg pb-20">
-      {/* Header */}
-      <header className="px-6 pt-2 pb-2">
-        <div className="flex justify-center">
-          <h1 className="sr-only">Keita's Kold Brew</h1>
-          <img
-            src="/icons/new-logo.png"
-            alt=""
-            width="1200"
-            height="800"
-            className="w-auto max-h-44 sm:max-h-48 md:max-h-52 object-contain block"
-          />
+    <>
+      <section className="home" aria-labelledby="home-title">
+        <div className="home__head">
+          <h1 className="home__title" id="home-title">Keita's Kold Brew</h1>
+          <p className="home__dek">Cold brew maths drawn to scale. Pick a stage, pour the batch, read the numbers.</p>
         </div>
-        <div className="flex items-center justify-between gap-3 mt-2">
-          <p className="text-brew-muted text-xs font-body italic">
-            Brewed to perfection. Every time.
-          </p>
-          <UnitToggle unit={unit} onChange={setUnit} compact />
-        </div>
-      </header>
-
-      {/* Divider */}
-      <div className="border-t border-brew-border mx-6 mb-4 mt-1" />
-
-      {/* Navigation Cards */}
-      <div className="space-y-3 px-6">
-        {CARDS.map(({ to, Icon, title, desc }) => (
-          <Link
-            key={to}
-            to={to}
-            className="flex items-center gap-4 bg-brew-surface border border-brew-border rounded-card p-4 hover:border-brew-accent transition-colors"
-          >
-            <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-brew-mid rounded-input">
-              <Icon size={22} className="text-brew-accent" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-brew-text font-body font-semibold">{title}</p>
-              <p className="text-brew-muted text-sm font-body">{desc}</p>
-            </div>
-            <ChevronRight size={18} className="text-brew-muted flex-shrink-0" />
-          </Link>
-        ))}
-      </div>
-    </div>
+        <ol className="stages">
+          {CALC_LIST.map((c, i) => {
+            const value = readAmount(c);
+            const parts = readParts(c);
+            const lead = c.out(value, parts, unit)[0];
+            return (
+              <li key={c.key}>
+                <Link className="stage" to={c.path}>
+                  <MiniVessel calc={c} unit={unit} value={value} parts={parts} />
+                  <span className="stage__body">
+                    <span className="stage__no">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="stage__title">{c.title}</span>
+                    <span className="stage__dek">{c.dek}</span>
+                    <span className="stage__fig">
+                      <span>{formatInput(c, unit, value)} {c.label.toLowerCase()}</span>
+                      <span>{lead.value} {lead.label.toLowerCase()}</span>
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+      <section className="method" aria-labelledby="routine-title">
+        <h2 className="method__title" id="routine-title">The routine</h2>
+        <ol className="method__list">
+          <li>Weigh extra coarse coffee and add four parts filtered water by weight</li>
+          <li>Start the steep timer below; 16 to 18 hours in the fridge is the sweet spot. It keeps counting if you close the app</li>
+          <li>Strain, then dilute 4 : 5 : 1 with water and sugar syrup to drink</li>
+          <li>Top with cold foam, made fresh just before serving</li>
+        </ol>
+      </section>
+    </>
   );
 }

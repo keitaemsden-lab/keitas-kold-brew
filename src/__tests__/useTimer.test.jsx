@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
 import { useTimer, rehydrate, TIMER_STATE_KEY } from '../hooks/useTimer';
-import Timer from '../components/Timer';
+import SteepDock from '../components/SteepDock';
 
 afterEach(() => vi.useRealTimers());
 
@@ -37,15 +37,14 @@ describe('useTimer', () => {
     expect(b.result.current.remaining).toBe(18 * 3600 - 70);
   });
 
-  it('REGRESSION: Timer component does not reset persisted state on mount', () => {
+  it('REGRESSION: the steep dock does not reset persisted state on mount', () => {
     window.localStorage.setItem(TIMER_STATE_KEY, JSON.stringify({
       targetHours: 20, totalSeconds: 72000, remaining: 5000, endsAt: null, finished: false,
     }));
-    render(<Timer />);
-    userEvent.setup();
-    act(() => screen.getByRole('button', { name: /brew timer/i }).click());
-    expect(screen.getByLabelText('Target steep hours')).toHaveValue('20');
+    render(<SteepDock />);
+    expect(screen.getByRole('group', { name: 'Target steep hours' })).toHaveTextContent('20 h');
     expect(screen.getByRole('timer')).toHaveTextContent('01:23:20');
+    expect(screen.getByRole('button', { name: 'Resume' })).toBeInTheDocument();
   });
 
   it('REGRESSION: fires onComplete at zero and shows the completion message', () => {
