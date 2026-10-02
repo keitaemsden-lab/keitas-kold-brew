@@ -132,8 +132,10 @@ export default function Calculator({ calc }) {
               {spec.map((r, i) => (
                 <tr key={r.label} className="is-enter" style={{ '--i': i }}>
                   <th scope="row">
-                    <i aria-hidden="true" style={r.swatch ? { background: SWATCH[r.swatch] } : { borderColor: 'transparent' }} />
-                    <span>{r.label}{r.note ? <small>{r.note}</small> : null}</span>
+                    <div className="spec__k">
+                      <i aria-hidden="true" style={r.swatch ? { background: SWATCH[r.swatch] } : { borderColor: 'transparent' }} />
+                      <span>{r.label}{r.note ? <small>{r.note}</small> : null}</span>
+                    </div>
                   </th>
                   <td>{r.value}</td>
                 </tr>
