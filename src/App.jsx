@@ -1,48 +1,44 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import BottomNav from './components/BottomNav';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Header from './components/Header';
+import SteepDock from './components/SteepDock';
 import Home from './pages/Home';
 import ConcentrateCalculator from './pages/ConcentrateCalculator';
 import DilutionCalculator from './pages/DilutionCalculator';
 import ColdFoamCalculator from './pages/ColdFoamCalculator';
-import { useLocalStorage, STORAGE_KEYS } from './hooks/useLocalStorage';
+import { UnitProvider } from './state/unit';
 
-// Inner component that has access to router context
+// `/` is always the Home landing page. Calculators are reached from the bar or
+// by direct link; there is no auto-redirect to a "last tab".
 function AppInner() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [lastTab, setLastTab] = useLocalStorage(STORAGE_KEYS.LAST_TAB, '/');
-
-  // Persist last visited tab
-  useEffect(() => {
-    setLastTab(location.pathname);
-  }, [location.pathname]);
-
-  // Restore last tab on mount (only if not already on a specific path)
-  useEffect(() => {
-    if (location.pathname === '/' && lastTab && lastTab !== '/') {
-      navigate(lastTab, { replace: true });
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
-    <div className="font-body bg-brew-bg min-h-screen">
-      <Routes>
-        <Route path="/"           element={<Home />} />
-        <Route path="/concentrate" element={<ConcentrateCalculator />} />
-        <Route path="/dilution"   element={<DilutionCalculator />} />
-        <Route path="/foam"       element={<ColdFoamCalculator />} />
-        <Route path="*"           element={<Navigate to="/" replace />} />
-      </Routes>
-      <BottomNav />
-    </div>
+    <>
+      <a className="skip" href="#main">Skip to content</a>
+      <Header />
+      <main id="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/concentrate" element={<ConcentrateCalculator />} />
+          <Route path="/dilution" element={<DilutionCalculator />} />
+          <Route path="/foam" element={<ColdFoamCalculator />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+      <footer className="foot">
+        <p>Keita's Kold Brew. Yield allows about 20% held back by the grounds.</p>
+        <a href="https://keitaemsden.com" rel="noopener">keitaemsden.com</a>
+      </footer>
+      <SteepDock />
+    </>
   );
 }
 
 export default function App() {
   return (
     <BrowserRouter>
-      <AppInner />
+      <UnitProvider>
+        <AppInner />
+      </UnitProvider>
     </BrowserRouter>
   );
 }
