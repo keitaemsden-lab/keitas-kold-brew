@@ -33,9 +33,12 @@ export default function Home() {
       {/* Header */}
       <header className="px-6 pt-2 pb-2">
         <div className="flex justify-center">
+          <h1 className="sr-only">Keita's Kold Brew</h1>
           <img
             src="/icons/new-logo.png"
-            alt="Keita's Kold Brew"
+            alt=""
+            width="1200"
+            height="800"
             className="w-auto max-h-44 sm:max-h-48 md:max-h-52 object-contain block"
           />
         </div>

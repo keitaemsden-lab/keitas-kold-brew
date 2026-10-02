@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { useTimer } from '../hooks/useTimer';
-import { useLocalStorage, STORAGE_KEYS } from '../hooks/useLocalStorage';
+import { fireBrewAlert, requestNotificationPermission } from '../utils/alarm';
 
 /**
  * Collapsible brew steep-time countdown timer.
@@ -11,15 +11,10 @@ import { useLocalStorage, STORAGE_KEYS } from '../hooks/useLocalStorage';
  */
 export default function Timer({ defaultHours = 18 }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [storedHours, setStoredHours] = useLocalStorage(STORAGE_KEYS.TIMER_HOURS, defaultHours);
-  const timer = useTimer(storedHours);
-
-  // On mount, ensure the hook reflects whatever was last persisted to localStorage.
-  // The hook initialises from the value passed to useTimer(), but localStorage may
-  // have a different value from a previous session.
-  useEffect(() => {
-    timer.setHours(storedHours);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // State (including a running countdown) is rehydrated inside useTimer; nothing
+  // here resets it on mount.
+  const timer = useTimer(defaultHours, { onComplete: fireBrewAlert });
+  const storedHours = timer.targetHours;
 
   const hh = String(timer.hours).padStart(2, '0');
   const mm = String(timer.minutes).padStart(2, '0');
@@ -54,8 +49,7 @@ export default function Timer({ defaultHours = 18 }) {
             <select
               value={storedHours}
               onChange={(e) => {
-                const h = parseInt(e.target.value);
-                setStoredHours(h);
+                const h = parseInt(e.target.value, 10);
                 timer.setHours(h);
               }}
               aria-label="Target steep hours"
@@ -84,7 +78,7 @@ export default function Timer({ defaultHours = 18 }) {
           </div>
 
           {/* Countdown display */}
-          <div className="text-center py-6 px-4" aria-live="off">
+          <div className="text-center py-6 px-4" role="timer" aria-label="Time remaining">
             <span className="text-5xl text-brew-cream font-mono tracking-widest select-none">
               {hh}
               <span className="text-brew-muted mx-1">:</span>
@@ -94,12 +88,17 @@ export default function Timer({ defaultHours = 18 }) {
             </span>
           </div>
 
+          {/* Completion state, announced to screen readers */}
+          <p role="status" className="text-center text-brew-success font-body font-medium px-4 pb-3 empty:hidden">
+            {timer.finished ? 'Brew complete. Time to strain.' : ''}
+          </p>
+
           {/* Control buttons */}
           <div className="flex gap-2 justify-center px-4">
             {!timer.isRunning ? (
               <button
                 type="button"
-                onClick={timer.start}
+                onClick={() => { requestNotificationPermission(); timer.start(); }}
                 className="flex-1 bg-brew-accent text-brew-bg rounded-input py-3 min-h-[48px] font-body font-medium transition-opacity hover:opacity-90"
               >
                 Start
@@ -124,7 +123,7 @@ export default function Timer({ defaultHours = 18 }) {
 
           {/* Tip */}
           <p className="text-brew-muted text-xs text-center px-4 pt-3 font-body italic">
-            Tip: Set your phone's native alarm as a backup
+            Tip: keep this tab open, and set your phone's alarm as a backup
           </p>
         </div>
       )}

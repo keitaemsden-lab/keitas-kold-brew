@@ -54,7 +54,7 @@ export default function SliderInput({ label, value, onChange, min, max, step, un
   return (
     <div className="bg-brew-surface rounded-card p-4 space-y-3">
       {/* Row 1: label left, stepper + numeric input right */}
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <span className="text-brew-muted text-sm font-body">{label}</span>
 
         <div className="flex items-center gap-2">
@@ -79,7 +79,7 @@ export default function SliderInput({ label, value, onChange, min, max, step, un
               onKeyDown={handleKeyDown}
               inputMode="decimal"
               aria-label={label}
-              className="w-20 text-center text-brew-text text-2xl font-semibold font-body bg-brew-mid rounded-input p-1 border border-brew-border focus:outline-none focus:border-brew-accent"
+              className="w-24 min-w-0 text-center text-brew-text text-xl font-semibold font-body bg-brew-mid rounded-input p-1 border border-brew-border focus:outline-none focus:border-brew-accent"
             />
             <span className="text-brew-muted text-sm font-body">{unit}</span>
           </div>
